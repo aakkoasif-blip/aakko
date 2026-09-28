@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nasru Speed | Ferry Booking</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand" onclick="showPage('home')"><div class="logoMark">≈</div><div><strong id="brandName">NASRU SPEED</strong><small id="brandTag">SAFE • FAST • COMFORTABLE</small></div></div>
+    <nav><button onclick="showPage('home')">Home</button><button onclick="showPage('manage')">Manage Booking</button><button class="primary" onclick="showPage('adminLogin')">Admin</button></nav>
+  </header>
+
+  <main>
+    <section id="home" class="page active">
+      <div class="hero">
+        <div class="heroText"><span class="pill">Maldives Speedboat Booking</span><h1>Book your speedboat trip online</h1><p>Search routes, choose a trip, select seats and pay securely.</p></div>
+        <div class="searchCard">
+          <div class="seg"><button class="active">One Way</button><button disabled>Round Trip</button></div>
+          <div class="formGrid four">
+            <label>Departure<select id="from"></select></label>
+            <label>Arrival<select id="to"></select></label>
+            <label>Travel Date<input id="travelDate" type="date"/></label>
+            <label>Currency<select id="currency"><option>MVR</option><option>USD</option></select></label>
+          </div>
+          <button class="primary wide" onclick="searchTrips()">Search Trips</button>
+        </div>
+      </div>
+      <div class="featureRow"><div>✓ Online Booking</div><div>✓ Seat Selection</div><div>✓ Payment Link</div><div>✓ WhatsApp / Telegram</div></div>
+      <section class="content"><h2>Available Trips</h2><div id="tripList" class="tripList"></div></section>
+    </section>
+
+    <section id="booking" class="page content narrow">
+      <button class="back" onclick="showPage('home')">← Back</button><h1>Passenger Information</h1><div id="selectedTrip" class="summary"></div>
+      <div class="card"><h3>Contact</h3><div class="formGrid two"><label>Full Name<input id="custName" placeholder="Full name"></label><label>Phone / WhatsApp<input id="custPhone" placeholder="+960 ..."></label><label>Email<input id="custEmail" type="email"></label><label>Telegram Chat ID (optional)<input id="custTelegram" placeholder="Only if you want Telegram messages"></label><label>Currency<select id="bookCurrency"><option>MVR</option><option>USD</option></select></label></div></div>
+      <div class="card"><h3>Passengers</h3><div class="counterRow"><span>Adults</span><button onclick="count('adult',-1)">−</button><b id="adultCount">1</b><button onclick="count('adult',1)">+</button></div><div class="counterRow"><span>Children</span><button onclick="count('child',-1)">−</button><b id="childCount">0</b><button onclick="count('child',1)">+</button></div><div class="counterRow"><span>Infants</span><button onclick="count('infant',-1)">−</button><b id="infantCount">0</b><button onclick="count('infant',1)">+</button></div></div>
+      <div class="card"><h3>Passenger Details & Seats</h3><div id="passengerForms"></div></div>
+      <div class="card"><h3>Payment Method</h3><label class="radio"><input type="radio" name="pay" value="PAYMENT_LINK" checked> Merchant Payment Link</label><label class="radio"><input type="radio" name="pay" value="BANK_TRANSFER"> Bank Transfer</label><label class="radio"><input type="radio" name="pay" value="CASH"> Cash / Counter</label></div>
+      <button class="primary wide" onclick="createBooking()">Create Booking & Payment Link</button>
+    </section>
+
+    <section id="confirmation" class="page content narrow"><div class="successIcon">✓</div><h1>Booking Created</h1><div id="confirmBox" class="card"></div><div class="buttonRow"><a id="payBtn" class="primary button" target="_blank">Pay Now</a><button onclick="showPage('manage')">Manage Booking</button></div></section>
+
+    <section id="manage" class="page content narrow"><h1>Manage Booking</h1><div class="card"><label>Booking Reference<input id="manageRef" placeholder="NS-20260924-001-ABCD"></label><label>Phone or Email<input id="manageContact" placeholder="Used when booking"></label><button class="primary wide" onclick="lookupBooking()">Search Securely</button><p class="muted">For privacy, a booking reference alone is not enough. Use the phone/email from the booking, or the secure link sent with your booking.</p></div><div id="manageResult"></div></section>
+
+    <section id="adminLogin" class="page content narrow"><h1>Admin / Staff Login</h1><div class="card"><label>Username<input id="loginUser" autocomplete="username"></label><label>Password<input id="loginPass" type="password" autocomplete="current-password"></label><button class="primary wide" onclick="login()">Login</button><p class="muted">Login attempts are rate-limited. Initial production credentials are set in the server .env file.</p></div></section>
+
+    <section id="admin" class="page adminShell">
+      <aside class="sidebar"><div class="sideBrand">NASRU SPEED</div><button data-perm="DASHBOARD" onclick="adminView('dashboard')">Dashboard</button><button data-perm="BOOKINGS_VIEW" onclick="adminView('bookings')">Bookings</button><button data-perm="TRIPS_VIEW" onclick="adminView('trips')">Trips</button><button data-perm="TRIPS_VIEW" onclick="adminView('fleet')">Boats & Locations</button><button data-perm="PAYMENTS_VIEW" onclick="adminView('payments')">Payments</button><button data-perm="NOTIFICATIONS" onclick="adminView('notifications')">Notifications</button><button data-perm="EXPENSES_VIEW" onclick="adminView('expenses')">Expenses</button><button data-perm="REPORTS_FINANCIAL" onclick="adminView('reports')">Reports & GST</button><button data-perm="SETTINGS" onclick="adminView('settings')">Company Settings</button><button data-perm="USERS_MANAGE" onclick="adminView('users')">Staff & Access</button><button data-perm="AUDIT" onclick="adminView('audit')">Audit Log</button><button onclick="logout()">Logout</button></aside>
+      <section class="adminMain"><div class="adminHeader"><h1 id="adminTitle">Dashboard</h1><span id="adminUser"></span></div><div id="adminContent"></div></section>
+    </section>
+  </main>
+<script src="/app.js"></script>
+</body></html>
